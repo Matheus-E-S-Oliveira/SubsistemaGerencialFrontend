@@ -6,7 +6,8 @@ import { ConsultaClienteContext } from './consultar-clientes.context';
 import { FormConsultarClientes } from './consultar-clientes.viewmodel';
 import { ClienteApiService } from '../../../../core/apis/endpoints/cliente.api.service';
 import { ClienteDto } from '../../../../core/apis/models/dto-models/dto-models.api.service';
-import { take } from 'rxjs';
+import { debounceTime, take } from 'rxjs';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-consultar-clientes',
@@ -28,6 +29,14 @@ export class ConsultarClientesComponent implements OnInit {
     this.context.InitForm(new FormConsultarClientes())
     this.getClientes(this.Grid.PageEvent);
 
+    this.context.formConsulta.valueChanges.pipe(
+      debounceTime(1500)
+    ).subscribe(() => {
+      this.getClientes({
+        ...this.Grid.PageEvent,
+        ...this.context.formConsulta.value
+      });
+    });
   }
 
   getClientes(event: PageEvent){
