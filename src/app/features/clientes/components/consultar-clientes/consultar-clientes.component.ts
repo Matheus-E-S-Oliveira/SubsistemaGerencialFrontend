@@ -6,7 +6,7 @@ import { ConsultaClienteContext } from './consultar-clientes.context';
 import { FormConsultarClientes } from './consultar-clientes.viewmodel';
 import { ClienteApiService } from '../../../../core/apis/endpoints/cliente.api.service';
 import { ClienteDto } from '../../../../core/apis/models/dto-models/dto-models.api.service';
-import { debounceTime, take } from 'rxjs';
+import { debounceTime, map, take } from 'rxjs';
 import { subscribe } from 'diagnostics_channel';
 
 @Component({
@@ -30,8 +30,15 @@ export class ConsultarClientesComponent implements OnInit {
     this.getClientes(this.Grid.PageEvent);
 
     this.context.formConsulta.valueChanges.pipe(
-      debounceTime(1500)
-    ).subscribe(() => {
+      debounceTime(1500),
+      map(formValue =>{
+        if(formValue.cpf && formValue !== null){
+          formValue.cpf = this.removeCpfMask(formValue.cpf);
+        }
+        return {...formValue};
+      })
+    )
+    .subscribe(() => {
       this.getClientes({
         ...this.Grid.PageEvent,
         ...this.context.formConsulta.value
@@ -46,5 +53,9 @@ export class ConsultarClientesComponent implements OnInit {
      .subscribe((response) => {
         this.Grid.PaginationResult = response
      })
+  }
+
+  removeCpfMask(cpf: string): string {
+    return cpf ? cpf.replace(/\D/g, '') : '';
   }
 }
