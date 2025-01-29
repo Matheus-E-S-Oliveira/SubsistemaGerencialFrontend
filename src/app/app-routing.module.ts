@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/clientes/clientes.module').then(m => m.ClientesModule)
   },
   {
+    path: 'fazendas',
+    loadChildren: () => import('./features/fazendas/fazendas.module').then(m => m.FazendasModule)
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'

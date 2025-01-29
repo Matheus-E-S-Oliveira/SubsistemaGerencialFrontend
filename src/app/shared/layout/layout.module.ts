@@ -9,9 +9,8 @@ import { AngularMaterialModule } from '../modules/angular-material.module';
 import { LayoutPageComponent } from './layout-page/layout-page.component';
 import { LayoutFooterComponent } from './layout-footer/layout-footer.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
+import { LayoutLoadingComponent } from './layout-loading/layout-loading.component';
 import { LayoutMenuLateralComponent } from './layout-menu-lateral/layout-menu-lateral.component';
-import { HomeModule } from '../../features/home/home.module';
-import { ClientesModule } from '../../features/clientes/clientes.module';
 
 
 
@@ -20,7 +19,8 @@ import { ClientesModule } from '../../features/clientes/clientes.module';
     LayoutPageComponent,
     LayoutFooterComponent,
     LayoutHeaderComponent,
-    LayoutMenuLateralComponent
+    LayoutMenuLateralComponent,
+    LayoutLoadingComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +29,7 @@ import { ClientesModule } from '../../features/clientes/clientes.module';
   ],
   exports: [
     LayoutPageComponent,
+    LayoutLoadingComponent
   ]
 })
 export class LayoutModule { }

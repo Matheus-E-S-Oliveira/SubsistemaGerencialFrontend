@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 
+import { provideNgxMask } from 'ngx-mask';
+
+import localePt from '@angular/common/locales/pt'; 
+import localePtExtra from '@angular/common/locales/extra/pt'; 
+
+registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
 @NgModule({
   declarations: [],
@@ -30,6 +36,11 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
     MatDividerModule,
     MatPaginatorModule,
     MatInputModule,
+  ],
+  providers: [
+    provideNgxMask(),
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ]
 })
 export class AngularMaterialModule { }
